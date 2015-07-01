@@ -4,7 +4,12 @@
 --]]
 
 -- Called when the Clockwork shared variables are added.
-function Clockwork.kernel:ClockworkAddSharedVars(globalVars, playerVars)
+function Schema:ClockworkAddSharedVars(globalVars, playerVars)
+	playerVars:Number("antidepressants", true);
 	playerVars:String("customClass");
+	playerVars:String("citizenID", true);
+	playerVars:Number("scanner", true);
 	playerVars:Number("clothes", true);
+	playerVars:Number("tied");
+	globalVars:Number("PKMode");
 end;

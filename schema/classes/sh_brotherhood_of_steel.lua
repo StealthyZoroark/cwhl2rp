@@ -10,4 +10,4 @@ local CLASS = Clockwork.class:New("Ranger");
 	CLASS.wagesName = "Supplies";
 	CLASS.description = "A ranger that lives in the Metro station.";
 	CLASS.defaultPhysDesc = "Wearing SpetSnaz armour";
-CLASS_BROTHERHOOD = Clockwork.class:Register(CLASS, "Ranger");
+CLASS_BROTHERHOOD = CLASS:Register();
