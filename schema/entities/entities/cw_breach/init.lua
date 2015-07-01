@@ -10,11 +10,11 @@ AddCSLuaFile("shared.lua");
 
 -- Called when the entity initializes.
 function ENT:Initialize()
-	self:SetModel("models/props_lab/citizenradio.mdl");
+	self:SetModel("models/props_wasteland/prison_padlock001a.mdl");
+	
 	self:SetMoveType(MOVETYPE_VPHYSICS);
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetUseType(SIMPLE_USE);
-	self:SetHealth(25);
 	self:SetSolid(SOLID_VPHYSICS);
 	
 	local physicsObject = self:GetPhysicsObject();
@@ -30,14 +30,42 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS;
 end;
 
--- A function to get the entity's item table.
-function ENT:GetItemTable()
-	return self.cwItemTable;
+-- A function to create a dummy breach.
+function ENT:CreateDummyBreach()
+	local entity = ents.Create("prop_physics");
+	
+	entity:SetCollisionGroup(COLLISION_GROUP_WORLD);
+	entity:SetAngles( self:GetAngles() );
+	entity:SetModel("models/props_wasteland/prison_padlock001b.mdl");
+	entity:SetPos( self:GetPos() );
+	
+	entity:Spawn();
+	
+	if (IsValid(entity)) then
+		Clockwork.entity:Decay(entity, 30);
+	end;
 end;
 
--- A function to set the entity's item table.
-function ENT:SetItemTable(itemTable)
-	self.cwItemTable = itemTable;
+-- A function to set the entity's breach entity.
+function ENT:SetBreachEntity(entity, trace)
+	local position = trace.HitPos;
+	local angles = trace.HitNormal:Angle();
+	
+	self.entity = entity;
+	self.entity:DeleteOnRemove(self);
+	
+	self:SetPos(position);
+	self:SetAngles(angles);
+	self:SetParent(entity);
+	
+	entity.breach = self; self:SetHealth(5);
+end;
+
+-- A function to open the entity.
+function ENT:BreachEntity(activator)
+	self:Explode(); self:Remove();
+	
+	Clockwork.plugin:Call("EntityBreached", self.entity, activator);
 end;
 
 -- A function to explode the entity.
@@ -58,25 +86,7 @@ function ENT:OnTakeDamage(damageInfo)
 	self:SetHealth( math.max(self:Health() - damageInfo:GetDamage(), 0) );
 	
 	if (self:Health() <= 0) then
-		self:Explode(); self:Remove();
-	end;
-end;
-
--- A function to set the frequency.
-function ENT:SetFrequency(frequency)
-	self:SetNetworkedString("frequency", frequency);
-end;
-
--- A function to set whether the entity is off.
-function ENT:SetOff(off)
-	self:SetDTBool(0, off);
-end;
-
--- A function to toggle whether the entity is off.
-function ENT:Toggle()
-	if (self:IsOff()) then
-		self:SetOff(false);
-	else
-		self:SetOff(true);
+		self:CreateDummyBreach();
+		self:BreachEntity( damageInfo:GetAttacker() );
 	end;
 end;

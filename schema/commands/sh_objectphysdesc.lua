@@ -1,9 +1,9 @@
 --[[
-	Â© 2012 CloudSixteen.com do not share, re-distribute or modify
+	© 2013 CloudSixteen.com do not share, re-distribute or modify
 	without permission of its author (kurozael@gmail.com).
 --]]
 
-local COMMAND = Clockwork.command:New();
+local COMMAND = Clockwork.command:New("ObjectPhysDesc");
 COMMAND.tip = "Set the physical description of an object.";
 COMMAND.flags = CMD_DEFAULT;
 
@@ -11,13 +11,13 @@ COMMAND.flags = CMD_DEFAULT;
 function COMMAND:OnRun(player, arguments)
 	local target = player:GetEyeTraceNoCursor().Entity;
 	
-	if ( IsValid(target) ) then
+	if (IsValid(target)) then
 		if (target:GetPos():Distance( player:GetShootPos() ) <= 192) then
-			if ( Clockwork.entity:IsPhysicsEntity(target) ) then
-				if ( player:QueryCharacter("key") == target:GetOwnerKey() ) then
+			if (Clockwork.entity:IsPhysicsEntity(target)) then
+				if (player:QueryCharacter("key") == target:GetOwnerKey()) then
 					player.objectPhysDesc = target;
-
-					Clockwork.datastream:Start(player, "cwObjectPhysDesc", target);
+					
+					Clockwork.datastream:Start(player, "ObjectPhysDesc", target);
 				else
 					Clockwork.player:Notify(player, "You are not the owner of this entity!");
 				end;
@@ -32,4 +32,4 @@ function COMMAND:OnRun(player, arguments)
 	end;
 end;
 
-Clockwork.command:Register(COMMAND, "ObjectPhysDesc");
+COMMAND:Register();

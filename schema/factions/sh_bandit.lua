@@ -1,16 +1,16 @@
 --[[
-	? 2012 CloudSixteen.com do not share, re-distribute or modify
+	© 2012 CloudSixteen.com do not share, re-distribute or modify
 	without permission of its author (kurozael@gmail.com).
 --]]
 
-local FACTION = Clockwork.faction:New("Dark Ones");
+local FACTION = Clockwork.faction:New("Bandit");
 
 FACTION.useFullName = true;
 FACTION.whitelist = true;
 FACTION.material = "newvegas/factions/bos";
 FACTION.models = {
-	female = {"models/avoxgaming/mrp/jake/darkone.mdl"},
-	male = {"models/avoxgaming/mrp/jake/darkone.mdl"}
+	female = {"models/error.mdl"},
+	male = {"models/metro2033/nikout/player/ranger2.mdl"}
 };
 
 -- Called when a player's model should be assigned for the faction.
@@ -30,4 +30,4 @@ function FACTION:OnTransferred(player, faction, name)
 	end;
 end;
 
-FACTION_DARK = FACTION:Register();
+FACTION_BANDIT = FACTION:Register();

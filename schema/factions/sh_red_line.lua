@@ -3,7 +3,7 @@
 	without permission of its author (kurozael@gmail.com).
 --]]
 
-local FACTION = {};
+local FACTION = Clockwork.faction:New("Red Line");
 
 FACTION.useFullName = true;
 FACTION.whitelist = true;
@@ -14,12 +14,20 @@ FACTION.models = {
 };
 
 -- Called when a player's model should be assigned for the faction.
-function FACTION:GetModel(player, character)
-	if (character.gender == GENDER_MALE) then
-		return self.models.male[1];
-	else
-		return self.models.female[1];
+function FACTION:OnTransferred(player, faction, name)
+	if (Schema:PlayerIsCombine(player)) then
+		if (name) then
+			local models = self.models[ string.lower( player:QueryCharacter("gender") ) ];
+			
+			if (models) then
+				player:SetCharacterData("model", models[ math.random(#models) ], true);
+				
+				Clockwork.player:SetName(player, name, true);
+			end;
+		else
+			return false, "You need to specify a name as the third argument!";
+		end;
 	end;
 end;
 
-FACTION_RED = Clockwork.faction:Register(FACTION, "Red Line");
+FACTION_RED = FACTION:Register();

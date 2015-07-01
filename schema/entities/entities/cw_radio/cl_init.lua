@@ -1,5 +1,5 @@
 --[[
-	© 2012 CloudSixteen.com do not share, re-distribute or modify
+	© 2013 CloudSixteen.com do not share, re-distribute or modify
 	without permission of its author (kurozael@gmail.com).
 --]]
 
@@ -15,7 +15,7 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	
 	y = Clockwork.kernel:DrawInfo("Radio", x, y, colorTargetID, alpha);
 	
-	if (frequency == "") then
+	if (frequency == 0) then
 		y = Clockwork.kernel:DrawInfo("This radio has no frequency.", x, y, colorWhite, alpha);
 	else
 		y = Clockwork.kernel:DrawInfo(frequency, x, y, colorWhite, alpha);
@@ -33,7 +33,7 @@ function ENT:Draw()
 	local right = self:GetRight() * 5;
 	local up = self:GetUp() * 8;
 	
-	if ( self:GetOff() ) then
+	if (self:IsOff()) then
 		glowColor = Color(255, 0, 0, a);
 	end;
 	

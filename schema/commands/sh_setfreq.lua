@@ -1,9 +1,9 @@
 --[[
-	Â© 2012 CloudSixteen.com do not share, re-distribute or modify
+	© 2013 CloudSixteen.com do not share, re-distribute or modify
 	without permission of its author (kurozael@gmail.com).
 --]]
 
-COMMAND = Clockwork.command:New();
+local COMMAND = Clockwork.command:New("SetFreq");
 COMMAND.tip = "Set your radio frequency, or a stationary radio's frequency.";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
@@ -25,7 +25,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	local frequency = arguments[1];
 	
-	if ( string.find(frequency, "^%d%d%d%.%d$") ) then
+	if (string.find(frequency, "^%d%d%d%.%d$")) then
 		local start, finish, decimal = string.match(frequency, "(%d)%d(%d)%.(%d)");
 		
 		start = tonumber(start);
@@ -50,4 +50,4 @@ function COMMAND:OnRun(player, arguments)
 	end;
 end;
 
-Clockwork.command:Register(COMMAND, "SetFreq");
+COMMAND:Register();

@@ -7,21 +7,20 @@ DEFINE_BASECLASS("base_gmodentity");
 
 ENT.Type = "anim";
 ENT.Author = "kurozael";
-ENT.PrintName = "Radio";
+ENT.PrintName = "Ration Dispenser";
 ENT.Spawnable = false;
 ENT.AdminSpawnable = false;
+ENT.UsableInVehicle = true;
+ENT.PhysgunDisabled = true;
 
--- Called when the data tables are setup.
+-- Called when the datatables are setup.
 function ENT:SetupDataTables()
-	self:DTVar("Bool", 0, "off");
+	self:DTVar("Float", 0, "ration");
+	self:DTVar("Float", 1, "flash");
+	self:DTVar("Bool", 0, "locked");
 end;
 
--- A function to get the frequency.
-function ENT:GetFrequency()
-	return self:GetNetworkedString("frequency");
-end;
-
--- A function to get whether the entity is off.
-function ENT:IsOff()
+-- A function to get whether the entity is locked.
+function ENT:IsLocked()
 	return self:GetDTBool(0);
 end;
