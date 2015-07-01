@@ -1,0 +1,9 @@
+"cwhl2rp"
+{
+	"base"			"Clockwork"
+	"title"			"Metro 2033"
+	"author"		"Lethal"
+	"version"		"1.00"
+	"description"		"A roleplaying game based on the Metro 2033 universe"
+	"workshopid"		"468561338"
+}

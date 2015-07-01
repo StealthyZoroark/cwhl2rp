@@ -1,0 +1,1 @@
+Clockwork.config:Add("durability_decrease_scale", 1);
